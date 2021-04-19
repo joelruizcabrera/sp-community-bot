@@ -1,0 +1,25 @@
+{
+  "name": "sp-community-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "console-progress-bar": "^1.0.5",
+    "discord.js": "^12.5.3",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joelruizcabrera/sp-community-bot.git"
+  },
+  "author": "Joel Schwegmann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joelruizcabrera/sp-community-bot/issues"
+  },
+  "homepage": "https://github.com/joelruizcabrera/sp-community-bot#readme"
+}
