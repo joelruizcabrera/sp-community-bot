@@ -27,14 +27,12 @@ exports.run = (bot, message, args) => {
         const removeMod = message.mentions.members.first();
         removeMod.roles.remove(modRole);
 
-        FUNCTIONS.conLink("DELETE FROM sp_mods WHERE admin_dsc_id = 123435");
+        FUNCTIONS.conLink("DELETE FROM sp_mods WHERE admin_dsc_id = " + removeMod.user.id);
     }
     if (args[0] == "add") {
         const removeMod = message.mentions.members.first();
         removeMod.roles.add(modRole);
 
-        console.log(removeMod.user.id);
-
-        FUNCTIONS.conLink("INSERT INTO sp_mods (admin_dsc_id) VALUES (123435)");
+        FUNCTIONS.conLink("INSERT INTO sp_mods (admin_dsc_id) VALUES (" + removeMod.user.id + ")");
     }
 };
