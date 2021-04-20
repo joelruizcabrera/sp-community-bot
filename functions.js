@@ -15,5 +15,25 @@ module.exports = {
             if (err) throw err;
             console.log("[" + author + "] hat " + newMod + " den Rang " + type);
         })
+    },
+    addMsgCount: function () {
+        const timeElapsed = Date.now();
+        const today = new Date(timeElapsed);
+
+        var checkSql = "SELECT * FROM sp_msgcount WHERE day_date = " + today.toLocaleDateString();
+        link.query(checkSql, function (err, res) {
+            if(err) {
+                logger.error('Error in DB');
+                logger.debug(err);
+                return;
+            } else {
+                if (row && row.length ) {
+                    console.log('Case row was found!');
+                    // do something with your row variable
+                } else {
+                    console.log('No case row was found :( !');
+                }
+            }
+        })
     }
 };
