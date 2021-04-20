@@ -33,6 +33,8 @@ exports.run = (bot, message, args) => {
         const removeMod = message.mentions.members.first();
         removeMod.roles.add(modRole);
 
+        console.log(removeMod);
+
         FUNCTIONS.conLink("INSERT INTO sp_mods (admin_dsc_id) VALUES (123435)");
     }
 };
