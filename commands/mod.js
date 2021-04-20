@@ -27,13 +27,15 @@ exports.run = (bot, message, args) => {
         const removeMod = message.mentions.members.first();
         removeMod.roles.remove(modRole);
 
+        bot.users.cache.get(removeMod.user.id).send("Hallo <@" + removeMod.user.id + ">! Dir wurde der **MOD** Rang entnommen.\nDanke das du das Team und den Server mit deiner Arbeit bereichert hast!\n\nDein SP Community Team");
+
         FUNCTIONS.conLink("DELETE FROM sp_mods WHERE admin_dsc_id = " + removeMod.user.id);
     }
     if (args[0] == "add") {
         const removeMod = message.mentions.members.first();
         removeMod.roles.add(modRole);
 
-        bot.users.cache.get(removeMod.user.id).send("Hallo <@" + removeMod.user.id + ">! Dir wurde der **MOD** Rang zugewiesen. \nBitte nutze deine Rechte auf dem Server nicht aus\nFalls du Fragen hast, melde dich gerne bei den anderen Moderatoren!\n\nWillkommen im Team!");
+        bot.users.cache.get(removeMod.user.id).send("Hallo <@" + removeMod.user.id + ">! Dir wurde der **MOD** Rang zugewiesen. \nBitte nutze deine Rechte auf dem Server nicht aus.\nFalls du Fragen hast, melde dich gerne bei den anderen Moderatoren!\n\nWillkommen im Team!");
 
         FUNCTIONS.conLink("INSERT INTO sp_mods (admin_dsc_id) VALUES (" + removeMod.user.id + ")");
     }
