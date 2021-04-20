@@ -1,4 +1,4 @@
-exports.run = (bot, message, args) => {
+exports.run = (bot, message, args, link) => {
     const modRole = message.guild.roles.cache.find(role => role.name === "Mod");
 
     if (!modRole) {
