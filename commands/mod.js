@@ -1,8 +1,6 @@
 exports.run = (bot, message, args) => {
     const modRole = message.guild.roles.cache.find(role => role.name === "Mod");
 
-    message.reply(args);
-
     if (!modRole) {
         return console.log("The Mods role does not exist");
     }
@@ -16,7 +14,10 @@ exports.run = (bot, message, args) => {
     }
 
     if (!message.guild.me.hasPermission("KICK_MEMBERS")) {
-        return message.reply("");
+        if (args[0] == "remove") {
+            let remMod = args[1];
+            console.log(remMod);
+        }
     }
 
     const removeMod = message.mentions.members.first();
