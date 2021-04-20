@@ -18,10 +18,11 @@ exports.run = (bot, message, args) => {
     }
 
     if (args[0] == "remove") {
-        let remMod = args[1];
-        console.log(remMod);
+        const removeMod = message.mentions.members.first();
+        removeMod.roles.remove(modRole);
     }
-
-    const removeMod = message.mentions.members.first();
-    removeMod.roles.remove(modRole);
+    if (args[0] == "add") {
+        const removeMod = message.mentions.members.first();
+        removeMod.roles.add(modRole);
+    }
 };
