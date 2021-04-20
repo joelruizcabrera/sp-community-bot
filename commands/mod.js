@@ -15,7 +15,7 @@ exports.run = (bot, message, args) => {
         return message.reply("Bitte erwähne einen Benutzer");
     }
 
-    if (!message.guild.me.hasPermission("KICK_MEMBERS")) {
+    if (!message.guild.me.hasPermission("MANAGE_ROLES")) {
         return message.reply("");
     }
 
