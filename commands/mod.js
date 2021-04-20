@@ -28,5 +28,11 @@ exports.run = (bot, message, args) => {
     if (args[0] == "add") {
         const removeMod = message.mentions.members.first();
         removeMod.roles.add(modRole);
+
+        let sql = "INSERT INTO sp_mods (admin_dsc_id) VALUES ('asd')";
+        link.query(sql, function (err, res) {
+            if (err) throw err;
+            console.log("1 record inserted");
+        })
     }
 };
