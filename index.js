@@ -54,6 +54,8 @@ console.log(`LICENSE:           ${pckg.license}`);
 msleep(300);
 console.log(`ENV:               ${process.env.APP_ENV}`);
 msleep(300);
+console.log(`BOT ACTIVITY:      ${current_activity}`);
+msleep(300);
 console.log(`_________________________________________________________________________________________________________          \n`);
 
 if (process.env.APP_ENV !== "dev" && process.env.APP_ENV === "prod") {
@@ -83,15 +85,15 @@ bot.on('ready', () => {
         current_activity = bot.config.default_activity;
     }
     console.log("BOT:           CONNECTED");
+
     msleep(200);
     link.connect(err => {
         if (err) return console.log(err);
         console.log(`MYSQL:         CONNECTED`);
     });
-    msleep(2000);
 
     console.log(`_________________________________________________________________________________________________________          \n`);
-    console.log(`BOT ACTIVITY:      ${current_activity}`);
+
 });
 
 fs.readdir("./events/", (err, files) => {
