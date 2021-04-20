@@ -88,12 +88,12 @@ bot.on('ready', () => {
     } else {
         bot.user.setActivity(config.default_activity, { type: 'PLAYING' });
     }
-    console.log("BOT:           CONNECTED");
+    console.log("BOT:           \x1b[42mCONNECTED\x1b[0m");
 
     msleep(200);
     link.connect(err => {
         if (err) return console.log(err);
-        console.log(`MYSQL:         CONNECTED`);
+        console.log(`MYSQL:         \x1b[42mCONNECTED\x1b[0m`);
     });
 });
 
