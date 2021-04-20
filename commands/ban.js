@@ -1,13 +1,13 @@
-exports.run = (bot, msg, [mention, ...reason]) => {
+exports.run = (bot, message, [mention, ...reason]) => {
     if (msg.member.hasPermission("BAN_MEMBERS")) {
-        if (msg.members.mentions.first()) {
+        if (message.mentions.members.first()) {
             try {
-                msg.members.mentions.first().ban();
+                message.mentions.members.first().ban();
             } catch {
-                msg.reply("I do not have permissions to ban" + msg.members.mentions.first());
+                message.reply("I do not have permissions to ban" + message.mentions.members.first());
             }
         } else {
-            msg.reply("You do not have permissions to ban" + msg.members.mentions.first());
+            message.reply("You do not have permissions to ban" + message.mentions.members.first());
         }
     }
 };
