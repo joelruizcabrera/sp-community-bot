@@ -95,10 +95,9 @@ bot.on('ready', () => {
         if (err) return console.log(err);
         console.log(`MYSQL:         CONNECTED`);
     });
-
-    console.log(`_________________________________________________________________________________________________________          \n`);
-
 });
+
+console.log(`_________________________________________________________________________________________________________          \n`);
 
 fs.readdir("./events/", (err, files) => {
     if (err) return console.error(err);
