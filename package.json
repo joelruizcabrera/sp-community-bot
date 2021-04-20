@@ -7,6 +7,7 @@
     "console-progress-bar": "^1.0.5",
     "discord.js": "^12.5.3",
     "dotenv": "^8.2.0",
+    "mysql": "^2.18.1",
     "nodemon": "^2.0.7"
   },
   "devDependencies": {},

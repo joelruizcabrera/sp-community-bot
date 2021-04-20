@@ -1,4 +1,13 @@
-const dotenv = require('dotenv').config()
+const dotenv = require('dotenv').config();
+
+const { createConnection } = require('mysql');
+
+var link = createConnection({
+    host     : process.env.MYSQL_HOST,
+    user     : process.env.MYSQL_USER,
+    password : process.env.MYSQL_PASS,
+    database : process.env.MYSQL_DB
+});
 
 const Discord = require('discord.js');
 const bot = new Discord.Client();
@@ -70,13 +79,23 @@ bot.on('ready', () => {
     }
 
     console.log("BOT IS SUCCESSFULLY CONNECTED");
+    msleep(200);
+    link.connect(err => {
+        // Console log if there is an error
+        if (err) return console.log(err);
+
+        // No error found?
+        console.log(`MySQL has been connected!`);
+    });
+
     console.log(`_________________________________________________________________________________________________________          \n`);
     console.log(`BOT ACTIVITY:      ${current_activity}`);
 });
 
 bot.on('message', msg => {
-    if (msg.content === 'ping') {
-        msg.reply('pong');
+    if (process.env.APP_ENV === "dev") {
+        bot.user.setActivity(config.develop_activity, { type: 'PLAYING' });
+        current_activity = config.develop_activity;
     }
 });
 
