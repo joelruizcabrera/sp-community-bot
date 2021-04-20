@@ -26,6 +26,8 @@ exports.run = (bot, message, args) => {
     if (args[0] == "remove") {
         const removeMod = message.mentions.members.first();
         removeMod.roles.remove(modRole);
+
+        FUNCTIONS.conLink("DELETE FROM sp_mods WHERE admin_dsc_id = 123435");
     }
     if (args[0] == "add") {
         const removeMod = message.mentions.members.first();
