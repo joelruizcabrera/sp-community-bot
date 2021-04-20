@@ -82,12 +82,17 @@ if (process.env.APP_ENV !== "dev" && process.env.APP_ENV === "prod") {
 }
 
 bot.on('ready', () => {
-
+    const list = client.guilds.get("335507048017952771");
+    list.members.forEach(member => function () {
+        const modRole = message.guild.roles.cache.find(role => role.name === "Member");
+        members.role.add(modRole);
+    });
     if (process.env.APP_ENV === "dev") {
         bot.user.setActivity(bot.config.develop_activity, { type: 'PLAYING' });
     } else {
         bot.user.setActivity(config.default_activity, { type: 'PLAYING' });
     }
+
     console.log("BOT:           \x1b[42m\x1b[30mCONNECTED\x1b[0m");
 
     msleep(200);
