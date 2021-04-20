@@ -1,5 +1,5 @@
 exports.run = (bot, message, args) => {
-    const modRole = message.guild.roles.cache.find(role => role.name === "Mod");
+    const modRole = message.guild.roles.cache.find(role => role.name === "Moderatoren");
 
     if (!modRole) {
         return console.log("The Mods role does not exist");
