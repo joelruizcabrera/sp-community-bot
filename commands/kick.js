@@ -3,7 +3,7 @@ exports.run = (bot, message, [mention, ...reason]) => {
     if (!modRole)
         return console.log("The Mods role does not exist");
 
-    if (!message.member.roles.has(modRole.id))
+    if (!message.member.roles.cache.has(modRole.id))
         return message.reply("You can't use this command.");
 
     if (message.mentions.members.size === 0)
