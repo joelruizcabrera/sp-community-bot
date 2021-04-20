@@ -1,58 +1,39 @@
-<?php
-
-$dataPoints = array();
-//Best practice is to create a separate file for handling connection to database
-try{
-     // Creating a new connection.
-    // Replace your-hostname, your-db, your-username, your-password according to your database
-    $link = new \PDO(   'mysql:host=5.189.179.246;dbname="sp-community";charset=utf8mb4', //'mysql:host=localhost;dbname=canvasjs_db;charset=utf8mb4',
-                        'sp_mysql', //'root',
-                        '9gDRTvFUpn85Jt2M', //'',
-                        array(
-                            \PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-\PDO::ATTR_PERSISTENT => false
-)
-);
-
-$handle = $link->prepare('select day_date, day_msg_count from sp_msgcount');
-$handle->execute();
-$result = $handle->fetchAll(\PDO::FETCH_OBJ);
-
-foreach($result as $row){
-array_push($dataPoints, array("x"=> $row->day_date, "y"=> $row->day_msgcount));
-}
-$link = null;
-}
-catch(\PDOException $ex){
-print($ex->getMessage());
-}
-
-?>
-<!DOCTYPE HTML>
 <html>
 <head>
-    <script>
-        window.onload = function () {
-
-            var chart = new CanvasJS.Chart("chartContainer", {
-                animationEnabled: true,
-                exportEnabled: true,
-                theme: "light1", // "light1", "light2", "dark1", "dark2"
-                title:{
-                    text: "PHP Column Chart from Database"
-                },
-                data: [{
-                    type: "column", //change type to bar, line, area, pie, etc
-                    dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-        }]
-        });
-        chart.render();
-
-        }
-    </script>
+    <title>Update Data</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<center>
+    <h3>UPDATE DATA</h3>
+    <?php
+    $conn = new mysqli('localhost', 'root', '', 'update');
+    $sql = "SELECT * FROM moderator where id=1";
+    $result = $conn->query($sql);
+    while ( $row=mysqli_fetch_assoc($result)) {
+        echo  'Moderator :<input type="text" id="mod" value="'.$row['name'].'">';
+        echo  'Category :<input type="text" id="ctgr" value="'.$row['category'].'">';
+    }?>
+    <button type="submit" id="update">UPDATE</button>
+</center>
+<script>
+    $(document).ready(function(){
+        $("#update").click(function(){
+            var name=$("#mod").val();
+            var ctgr=$("#ctgr").val();
+            $.ajax({
+                url:'getData.php',
+                method:'POST',
+                data:{
+                    name:name,
+                    ctgr:ctgr
+                },
+                success:function(response){
+                    alert(response);
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
