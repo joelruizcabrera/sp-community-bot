@@ -28,8 +28,13 @@ module.exports = {
                 return;
             } else {
                 if (res && res.length ) {
-                    console.log('Case row was found!');
-                    // do something with your row variable
+                    var updateRow = "UPDATE sp_msgcount SET day_msg_count = day_msg_count + 1 WHERE day_date = '" + today.toLocaleDateString() + "'";
+
+                    link.query(updateRow, function (err, res) {
+                        if(err) {
+                            console.log("\x1b[41mERROR: COUNTING MESSAGE ERROR\x1b[0m\n\n" + err);
+                        }
+                    })
                 } else {
                     var newRow = "INSERT INTO sp_msgcount (day_date, day_msg_count) VALUES ('" + today.toLocaleDateString() + "', 1)"
 
