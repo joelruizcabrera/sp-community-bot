@@ -17,6 +17,10 @@ exports.run = (bot, message, args) => {
         return message.reply("");
     }
 
+    if (!args[0] && !args[1]) {
+        return message.reply("Bitte gib ein valides Argument an");
+    }
+
     if (args[0] == "remove") {
         const removeMod = message.mentions.members.first();
         removeMod.roles.remove(modRole);
