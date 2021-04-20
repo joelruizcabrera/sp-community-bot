@@ -27,7 +27,7 @@ module.exports = {
                 logger.debug(err);
                 return;
             } else {
-                if (row && row.length ) {
+                if (res && res.length ) {
                     console.log('Case row was found!');
                     // do something with your row variable
                 } else {
