@@ -85,13 +85,10 @@ bot.on('ready', () => {
     console.log("BOT:           CONNECTED");
     msleep(200);
     link.connect(err => {
-        // Console log if there is an error
         if (err) return console.log(err);
-
-        // No error found?
         console.log(`MYSQL:         CONNECTED`);
     });
-    msleep(500);
+    msleep(2000);
 
     console.log(`_________________________________________________________________________________________________________          \n`);
     console.log(`BOT ACTIVITY:      ${current_activity}`);
