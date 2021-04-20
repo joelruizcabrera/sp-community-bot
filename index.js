@@ -2,6 +2,12 @@ const dotenv = require('dotenv').config();
 
 const { createConnection } = require('mysql');
 
+const Discord = require('discord.js');
+const bot = new Discord.Client();
+
+const Enmap = require("enmap");
+const fs = require("fs");
+
 var link = createConnection({
     host     : process.env.MYSQL_HOST,
     user     : process.env.MYSQL_USER,
@@ -9,14 +15,13 @@ var link = createConnection({
     database : process.env.MYSQL_DB
 });
 
-const Discord = require('discord.js');
-const bot = new Discord.Client();
-
 const ConsoleProgressBar = require('console-progress-bar');
 const consoleProgressBar = new ConsoleProgressBar({ maxValue: 100 });
 
 const pckg = require('./package.json');
 const config = require('./config.json');
+
+bot.config = config;
 
 function msleep(n) {
     Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, n);
@@ -71,11 +76,11 @@ bot.on('ready', () => {
     var current_activity = "";
 
     if (process.env.APP_ENV === "dev") {
-        bot.user.setActivity(config.develop_activity, { type: 'PLAYING' });
-        current_activity = config.develop_activity;
+        bot.user.setActivity(bot.config.develop_activity, { type: 'PLAYING' });
+        current_activity = bot.config.develop_activity;
     } else {
         bot.user.setActivity(config.default_activity, { type: 'PLAYING' });
-        current_activity = config.default_activity;
+        current_activity = bot.config.default_activity;
     }
 
     console.log("BOT IS SUCCESSFULLY CONNECTED");
@@ -92,11 +97,26 @@ bot.on('ready', () => {
     console.log(`BOT ACTIVITY:      ${current_activity}`);
 });
 
-bot.on('message', msg => {
-    if (process.env.APP_ENV === "dev") {
-        bot.user.setActivity(config.develop_activity, { type: 'PLAYING' });
-        current_activity = config.develop_activity;
-    }
+fs.readdir("./events/", (err, files) => {
+    if (err) return console.error(err);
+    files.forEach(file => {
+        const event = require(`./events/${file}`);
+        let eventName = file.split(".")[0];
+        bot.on(eventName, event.bind(null, bot));
+    });
+});
+
+bot.commands = new Enmap();
+
+fs.readdir("./commands/", (err, files) => {
+    if (err) return console.error(err);
+    files.forEach(file => {
+        if (!file.endsWith(".js")) return;
+        let props = require(`./commands/${file}`);
+        let commandName = file.split(".")[0];
+        console.log(`Attempting to load command ${commandName}`);
+        bot.commands.set(commandName, props);
+    });
 });
 
 bot.login(process.env.APP_TOKEN);

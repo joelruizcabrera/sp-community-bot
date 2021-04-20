@@ -1,4 +1,5 @@
 {
+  "prefix": "!",
   "default_activity": "!help für alle Befehle",
   "develop_activity": "Zur Zeit im Entwicklungsmodus"
 }
