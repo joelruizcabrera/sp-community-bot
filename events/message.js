@@ -1,7 +1,7 @@
 module.exports = (bot, message) => {
     if (message.author.bot) return;
 
-    console.log(message.content);
+    console.log("[@" + message.channel.name + "] " + message.author.tag + ": " + message.content);
 
     if (message.content.indexOf(bot.config.prefix) !== 0) return;
 
