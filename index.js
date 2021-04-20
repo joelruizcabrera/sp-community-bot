@@ -97,8 +97,6 @@ bot.on('ready', () => {
     });
 });
 
-console.log(`_________________________________________________________________________________________________________          \n`);
-
 fs.readdir("./events/", (err, files) => {
     if (err) return console.error(err);
     files.forEach(file => {
@@ -119,6 +117,7 @@ fs.readdir("./commands/", (err, files) => {
         console.log(`COMMAND LOADED:        ${commandName}`);
         bot.commands.set(commandName, props);
     });
+    console.log(`_________________________________________________________________________________________________________          \n`);
 });
 
 bot.login(process.env.APP_TOKEN);
