@@ -2,7 +2,7 @@ const dotenv = require('dotenv').config();
 const { createConnection } = require('mysql');
 
 module.exports = {
-    conLink: function (sql) {
+    addRemMod: function (sql, author, newMod, type) {
         var link = createConnection({
             host     : process.env.MYSQL_HOST,
             user     : process.env.MYSQL_USER,
@@ -12,7 +12,7 @@ module.exports = {
 
         link.query(sql, function (err, res) {
             if (err) throw err;
-            console.log("1 record inserted");
+            console.log("[" + author + "] hat " + newMod + " den Rang " + type);
         })
     }
 };
