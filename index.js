@@ -33,6 +33,14 @@ function between(min, max) {
     )
 }
 
+var current_activity = "";
+
+if (process.env.APP_ENV === "dev") {
+    current_activity = bot.config.develop_activity;
+} else {
+    current_activity = bot.config.default_activity;
+}
+
 
 console.log('\033[2J');
 console.log(`     __              .__                 .__                      ___.                                             `);
@@ -75,14 +83,10 @@ if (process.env.APP_ENV !== "dev" && process.env.APP_ENV === "prod") {
 
 bot.on('ready', () => {
 
-    var current_activity = "";
-
     if (process.env.APP_ENV === "dev") {
         bot.user.setActivity(bot.config.develop_activity, { type: 'PLAYING' });
-        current_activity = bot.config.develop_activity;
     } else {
         bot.user.setActivity(config.default_activity, { type: 'PLAYING' });
-        current_activity = bot.config.default_activity;
     }
     console.log("BOT:           CONNECTED");
 
