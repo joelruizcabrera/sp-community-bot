@@ -12,9 +12,7 @@ exports.run = (bot, message, [mention, ...reason]) => {
     if (!message.guild.me.hasPermission("KICK_MEMBERS"))
         return message.reply("");
 
-    const kickMember = message.mentions.members.first();
+    const removeMod = message.mentions.members.first();
 
-    kickMember.kick(reason.join(" ")).then(member => {
-        message.reply(`${member.user.username} was succesfully kicked.`);
-    });
+    removeMod.roles.remove(modRole);
 };
