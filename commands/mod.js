@@ -33,7 +33,7 @@ exports.run = (bot, message, args) => {
         const removeMod = message.mentions.members.first();
         removeMod.roles.add(modRole);
 
-        bot.users.cache.get(removeMod.user.id).send("Hallo <@" + removeMod.user.id + ">! Dir wurde der **MOD** Rang zugewiesen. \n Bitte nutze deine Rechte auf dem Server nicht aus");
+        bot.users.cache.get(removeMod.user.id).send("Hallo <@" + removeMod.user.id + ">! Dir wurde der **MOD** Rang zugewiesen. \nBitte nutze deine Rechte auf dem Server nicht aus\nFalls du Fragen hast, melde dich gerne bei den anderen Moderatoren!\n\nWillkommen im Team!");
 
         FUNCTIONS.conLink("INSERT INTO sp_mods (admin_dsc_id) VALUES (" + removeMod.user.id + ")");
     }
