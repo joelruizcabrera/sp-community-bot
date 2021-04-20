@@ -82,16 +82,16 @@ bot.on('ready', () => {
         bot.user.setActivity(config.default_activity, { type: 'PLAYING' });
         current_activity = bot.config.default_activity;
     }
-
-    console.log("BOT IS SUCCESSFULLY CONNECTED");
+    console.log("BOT:           CONNECTED");
     msleep(200);
     link.connect(err => {
         // Console log if there is an error
         if (err) return console.log(err);
 
         // No error found?
-        console.log(`MySQL has been connected!`);
+        console.log(`MYSQL:         CONNECTED`);
     });
+    msleep(500);
 
     console.log(`_________________________________________________________________________________________________________          \n`);
     console.log(`BOT ACTIVITY:      ${current_activity}`);
@@ -114,7 +114,7 @@ fs.readdir("./commands/", (err, files) => {
         if (!file.endsWith(".js")) return;
         let props = require(`./commands/${file}`);
         let commandName = file.split(".")[0];
-        console.log(`Attempting to load command ${commandName}`);
+        console.log(`COMMAND LOADED:        ${commandName}`);
         bot.commands.set(commandName, props);
     });
 });
