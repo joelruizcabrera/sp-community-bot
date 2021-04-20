@@ -1,6 +1,8 @@
 module.exports = (bot, message) => {
     if (message.author.bot) return;
 
+    console.log(message.content);
+
     if (message.content.indexOf(bot.config.prefix) !== 0) return;
 
     const args = message.content.slice(bot.config.prefix.length).trim().split(/ +/g);

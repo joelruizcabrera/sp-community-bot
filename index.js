@@ -93,7 +93,7 @@ bot.on('ready', () => {
     msleep(200);
     link.connect(err => {
         if (err) return console.log(err);
-        console.log(`MYSQL:         \x1b[42m\x1b[30mCONNECTED\x1b[0m`);
+        console.log(`MYSQL:         \x1b[42m\x1b[30mCONNECTED\x1b[0m\n\n`);
     });
 });
 
