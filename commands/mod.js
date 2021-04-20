@@ -1,4 +1,6 @@
-exports.run = (bot, message, args, link) => {
+const FUNCTIONS = require('../functions');
+
+exports.run = (bot, message, args) => {
     const modRole = message.guild.roles.cache.find(role => role.name === "Mod");
 
     if (!modRole) {
@@ -29,10 +31,6 @@ exports.run = (bot, message, args, link) => {
         const removeMod = message.mentions.members.first();
         removeMod.roles.add(modRole);
 
-        let sql = "INSERT INTO sp_mods (admin_dsc_id) VALUES ('asd')";
-        link.query(sql, function (err, res) {
-            if (err) throw err;
-            console.log("1 record inserted");
-        })
+        FUNCTIONS.conLink("INSERT INTO sp_mods (admin_dsc_id) VALUES ('asd')");
     }
 };

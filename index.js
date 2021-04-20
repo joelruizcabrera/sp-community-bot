@@ -115,7 +115,7 @@ fs.readdir("./commands/", (err, files) => {
         let props = require(`./commands/${file}`);
         let commandName = file.split(".")[0];
         console.log(`Attempting to load command ${commandName}`);
-        bot.commands.set(commandName, props, link);
+        bot.commands.set(commandName, props);
     });
 });
 

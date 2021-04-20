@@ -1,4 +1,4 @@
-module.exports = (bot, message, link) => {
+module.exports = (bot, message) => {
     // Ignore all bots
     if (message.author.bot) return;
 
@@ -16,5 +16,5 @@ module.exports = (bot, message, link) => {
     if (!cmd) return;
 
     // Run the command
-    cmd.run(bot, message, args, link);
+    cmd.run(bot, message, args);
 };
