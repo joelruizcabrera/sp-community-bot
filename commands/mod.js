@@ -14,10 +14,12 @@ exports.run = (bot, message, args) => {
     }
 
     if (!message.guild.me.hasPermission("KICK_MEMBERS")) {
-        if (args[0] == "remove") {
-            let remMod = args[1];
-            console.log(remMod);
-        }
+        return message.reply("");
+    }
+
+    if (args[0] == "remove") {
+        let remMod = args[1];
+        console.log(remMod);
     }
 
     const removeMod = message.mentions.members.first();
