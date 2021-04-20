@@ -3,6 +3,8 @@ const FUNCTIONS = require('../functions');
 module.exports = (bot, message) => {
     if (message.author.bot) return;
 
+    const modRole = message.guild.roles.cache.find(role => role.name === "Mod");
+
     if (!message.member.roles.cache.has(modRole.id))
         return console.log("\x1b[47m\x1b[30m\x1b[1m[#" + message.channel.name + "]\x1b[0m \x1b301m" + message.author.tag + ": " + message.content + "\x1b[0m");
 
