@@ -1,5 +1,5 @@
 exports.run = (bot, message, [mention, ...reason]) => {
-    if (msg.member.hasPermission("BAN_MEMBERS")) {
+    if (message.member.hasPermission("BAN_MEMBERS")) {
         if (message.mentions.members.first()) {
             try {
                 message.mentions.members.first().ban();
