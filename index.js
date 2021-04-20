@@ -82,11 +82,6 @@ if (process.env.APP_ENV !== "dev" && process.env.APP_ENV === "prod") {
 }
 
 bot.on('ready', () => {
-    const list = bot.guilds.get("834081196731924501");
-    list.members.forEach(member => function () {
-        const modRole = message.guild.roles.cache.find(role => role.name === "Member");
-        members.role.add(modRole);
-    });
     if (process.env.APP_ENV === "dev") {
         bot.user.setActivity(bot.config.develop_activity, { type: 'PLAYING' });
     } else {
