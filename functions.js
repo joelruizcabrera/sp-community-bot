@@ -20,7 +20,7 @@ module.exports = {
         const timeElapsed = Date.now();
         const today = new Date(timeElapsed);
 
-        var checkSql = "SELECT * FROM sp_msgcount WHERE day_date = " + today.toLocaleDateString();
+        var checkSql = "SELECT * FROM sp_msgcount WHERE day_date = '" + today.toLocaleDateString() + "'";
         link.query(checkSql, function (err, res) {
             if(err) {
                 logger.error('Error in DB');
@@ -31,7 +31,13 @@ module.exports = {
                     console.log('Case row was found!');
                     // do something with your row variable
                 } else {
-                    console.log('No case row was found :( !');
+                    var newRow = "INSERT INTO sp_msgcount (day_date, day_msg_count) VALUES ('" + today.toLocaleDateString() + "', 1)"
+
+                    link.query(newRow, function (err, res) {
+                        if(err) {
+                            console.log("\x1b[41mERROR: COUNTING MESSAGE ERROR\x1b[0m\n\n" + err);
+                        }
+                    })
                 }
             }
         })
