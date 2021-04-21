@@ -1,12 +1,15 @@
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv').config()
 
-const { createConnection } = require('mysql');
+const { createConnection } = require('mysql')
 
-const Discord = require('discord.js');
-const bot = new Discord.Client();
+const Discord = require('discord.js')
 
-const Enmap = require("enmap");
-const fs = require("fs");
+const WEB = require('./web/web')
+
+const bot = new Discord.Client()
+
+const Enmap = require("enmap")
+const fs = require("fs")
 
 var link = createConnection({
     host     : process.env.MYSQL_HOST,
@@ -93,9 +96,11 @@ bot.on('ready', () => {
     msleep(200);
     link.connect(err => {
         if (err) return console.log(err);
-        console.log(`MYSQL:         \x1b[42m\x1b[30mCONNECTED\x1b[0m\n\n`);
+        console.log(`MYSQL:         \x1b[42m\x1b[30mCONNECTED\x1b[0m`);
     });
 });
+
+var ws = new WEB('123456', 8080, bot)
 
 fs.readdir("./events/", (err, files) => {
     if (err) return console.error(err);

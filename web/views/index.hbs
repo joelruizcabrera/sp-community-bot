@@ -1,0 +1,63 @@
+<iframe style="display: none" name="dummyframe" id="dummyframe"></iframe>
+
+<div class="sec-1">
+    <div class="row">
+        <div class="col-sm-6 col-lg-3">
+            <div class="sp-stats-card sp-stats-1">
+                <div class="text-heading">
+                    <h2>Messages Today</h2>
+                </div>
+                <p id="msgToday">{{msgToday}}</p>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="sp-stats-card sp-stats-2">
+                <div class="text-heading">
+                    <h2>Current Users</h2>
+                </div>
+                <p>102</p>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="sp-stats-card sp-stats-3">
+                <div class="text-heading">
+                    <h2>Current Users</h2>
+                </div>
+                <p>102</p>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="sp-stats-card sp-stats-4">
+                <div class="text-heading">
+                    <h2>Current Users</h2>
+                </div>
+                <p>102</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sec-2">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="sp-card-item">
+                <h1 class="head-1">Send Message</h1>
+                <form action="/sendMessage" method="POST" target="dummyframe" id="msgForm">
+                    <input type="hidden" name="token" value="{{token}}">
+                    <div class="mb-3">
+                        <label for="selectChannel" class="form-label">Select Channel</label>
+                        <select class="form-select form-select-md" name="channelid" id="selectChannel">
+                            {{#each chans}}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="msgText" class="form-label">Message</label>
+                        <textarea name="text" id="msgText" class="form-control"></textarea>
+                    </div>
+                    <button type="submit" id="sendMsgBtn" class="btn btn-primary">SEND</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+body {
+    margin: 0;
+    background-color: #e4e4e4;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1.head-1 {
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+[class^="sec-"] {
+    margin-bottom: calc(1rem + 3vw);
+}
+
+.main-content {
+    padding: 1rem;
+}
+
+.sp-card-item {
+    padding: 1rem;
+    background-color: #d0d0d0;
+}
+
+.sp-stats-card {
+    padding: .5rem;
+}
+
+.sp-stats-card h2{
+    font-size: 1.2rem;
+}
+
+.sp-stats-card p{
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+.sp-stats-card.sp-stats-1 {
+    background-color: #542e71;
+    color: #fff;
+}
+
+.sp-stats-card.sp-stats-2 {
+    background-color: #fb3640;
+    color: #fff;
+}
+
+.sp-stats-card.sp-stats-3 {
+    background-color: #fdca40;
+    color: #fff;
+}
+
+.sp-stats-card.sp-stats-4 {
+    background-color: #81b214;
+    color: #fff;
+}
+
+@media (max-width: 992px) {
+    .sp-stats-card.sp-stats-1,
+    .sp-stats-card.sp-stats-2 {
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .sp-stats-card.sp-stats-3 {
+        margin-bottom: 1.5rem;
+    }
+}
