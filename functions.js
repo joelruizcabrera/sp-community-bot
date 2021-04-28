@@ -1,50 +1,75 @@
 const dotenv = require('dotenv').config();
-const { createConnection } = require('mysql');
+const fs = require('fs');
+const dateFormat = require('dateformat');
 
-var link = createConnection({
-    host     : process.env.MYSQL_HOST,
-    user     : process.env.MYSQL_USER,
-    password : process.env.MYSQL_PASS,
-    database : process.env.MYSQL_DB
-});
+let countmsg = 0;
 
 module.exports = {
     addRemMod: function (sql, author, newMod, type) {
 
-        link.query(sql, function (err, res) {
-            if (err) throw err;
-            console.log("[" + author + "] hat " + newMod + " den Rang " + type);
-        })
     },
     addMsgCount: function () {
         const timeElapsed = Date.now();
         const today = new Date(timeElapsed);
 
-        var checkSql = "SELECT * FROM sp_msgcount WHERE day_date = '" + today.toLocaleDateString() + "'";
-        link.query(checkSql, function (err, res) {
-            if(err) {
-                logger.error('Error in DB');
-                logger.debug(err);
-                return;
+        var now = dateFormat(new Date(), "dd/mm/yyyy");
+
+        fs.readFile('./msgcount.json', (err, data) => {
+            if (err) throw err;
+            let dataSrc = JSON.parse(data);
+            var dataArr = dataSrc.msgCount;
+
+            let foundToday = false;
+            var lastIndex = dataArr.length - 1;
+
+            if (dataArr[lastIndex].date != now) {
+                newMsgDate(now)
             } else {
-                if (res && res.length ) {
-                    var updateRow = "UPDATE sp_msgcount SET day_msg_count = day_msg_count + 1 WHERE day_date = '" + today.toLocaleDateString() + "'";
-
-                    link.query(updateRow, function (err, res) {
-                        if(err) {
-                            console.log("\x1b[41mERROR: COUNTING MESSAGE ERROR\x1b[0m\n\n" + err);
-                        }
-                    })
-                } else {
-                    var newRow = "INSERT INTO sp_msgcount (day_date, day_msg_count) VALUES ('" + today.toLocaleDateString() + "', 1)"
-
-                    link.query(newRow, function (err, res) {
-                        if(err) {
-                            console.log("\x1b[41mERROR: COUNTING MESSAGE ERROR\x1b[0m\n\n" + err);
-                        }
-                    })
-                }
+                updateMsgFile(now, dataArr)
             }
-        })
+
+            /*for (let i = 0; i < dataArr.length; i++) {
+                console.log(lastIndex);
+            }*/
+        });
+
     }
 };
+
+function newMsgDate(newJson) {
+    var obj = JSON.parse(fs.readFileSync('./msgcount.json', 'utf-8'));
+
+    obj["msgCount"].push({"date": newJson, "count": 0});
+    jsonStr = JSON.stringify(obj, null, 4);
+    fs.writeFileSync('./msgcount.json', jsonStr);
+}
+
+function updateMsgFile(now) {
+    countmsg++;
+    console.log(countmsg)
+    /*fs.readFile('./msgcount.json', (err, data) => {
+        if (err) throw err;
+
+        let foundToday = false;
+
+        let dataSrc = JSON.parse(data);
+        var dataArr = dataSrc.msgCount;
+        var lastIndex = dataArr.length - 1;
+
+        var newCount = dataArr[lastIndex].count + 1;
+
+        const obj = JSON.parse(fs.readFileSync('./msgcount.json', 'utf-8'));
+
+        try {
+            fs.writeFileSync(filePath, JSON.stringify(fileObject, null, 4), 'utf8');
+            console.log("The file was saved!");
+        }
+        catch(err) {
+            console.err("An error has ocurred when saving the file.");
+        }
+
+        /!*for (let i = 0; i < dataArr.length; i++) {
+            console.log(lastIndex);
+        }*!/
+    });*/
+}

@@ -2,18 +2,13 @@ const express = require('express')
 const hbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const path = require('path')
-const { createConnection } = require('mysql')
+
+const dateFormat = require('dateformat');
+var now = dateFormat(new Date(), "dd/mm/yyyy");
 
 const fs = require('fs')
 
 require('dotenv').config()
-
-var link = createConnection({
-    host     : process.env.MYSQL_HOST,
-    user     : process.env.MYSQL_USER,
-    password : process.env.MYSQL_PASS,
-    database : process.env.MYSQL_DB
-})
 
 class WebSocket {
     constructor(token, port, client) {
@@ -45,11 +40,20 @@ class WebSocket {
     }
 
     registerRoots() {
+
         this.app.get('/', (req, res) => {
+
+            res.render('login', {
+                title: 'Login - SP COMMUNITY Bot',
+            })
+
+        })
+
+        this.app.get('/board', (req, res) => {
             var _token = req.query.token
 
             if (!this.checkToken(_token)) {
-                res.render('error', {title: 'ERROR', errtype: 'INVALID TOKEN'})
+                res.redirect('/?correct=false')
                 return
             }
             var chans = []
@@ -59,10 +63,82 @@ class WebSocket {
                 }
             })
 
+            var mods = []
+
+            this.client.guilds.cache.first().members.cache.forEach(u => {
+                var getRole = u.roles.member._roles
+                if (getRole.indexOf('834080634145865739') > -1) {
+                    var username = u.roles.member.user.username
+                    var discriminator = u.roles.member.user.discriminator
+                    var userid = u.roles.member.user.id
+                    var avatar = u.roles.member.user.avatar
+
+                    mods.push({name: username, disc: discriminator, userid: userid, avatar: avatar})
+                }
+                /*var checkTrue = u.roles.includes('834080634145865739');
+                if (checkTrue === true ) {
+                    console.log(u.user.username)
+                }*/
+            })
+
+            /*if(this.client.guilds.cache.first().member.roles.cache.find(r => r.id === "834080634145865739")){
+                console.log(this.client.guilds.member.name)
+            }*/
+
+            var roles = []
+
+            this.client.guilds.cache.first().roles.cache.forEach(m => {
+                roles.push({id: m.id, name: m.name, color: "#" + OLEtoRGB(m.color)})
+            })
+
+            var emojis = []
+
+            this.client.guilds.cache.first().emojis.cache.forEach(e => {
+                var emoji_bool = ""
+                var emoji_badge = ""
+                var emoji_text = ""
+                if (e.animated === false) {
+                    emoji_bool = "false"
+                    emoji_badge = "danger"
+                    emoji_text = "NO"
+                } else {
+                    emoji_bool = "true"
+                    emoji_badge = "success"
+                    emoji_text = "YES"
+                }
+
+                emojis.push({id: e.id, name: e.name, animated: {bool: emoji_bool, badge: emoji_badge, text: emoji_text}})
+            })
+
+            var todayCount = [];
+
+            fs.readFile('./msgcount.json', (err, data) => {
+                if (err) throw err;
+                let dataSrc = JSON.parse(data);
+                var dataArr = dataSrc.msgCount;
+
+                var lastIndex = dataArr.length - 1;
+
+                console.log(dataArr[lastIndex].count)
+
+                todayCount.push({count: dataArr[lastIndex].count});
+
+                /*for (let i = 0; i < dataArr.length; i++) {
+                    console.log(lastIndex);
+                }*/
+            });
+
+            console.log(todayCount)
+
             res.render('index', {
-                title: 'Discord Bot INterface',
+                title: 'SP COMMUNITY Bot',
                 token: _token,
-                chans
+                chans,
+                roles,
+                emojis,
+                bot_status: this.client.presence.status,
+                mods,
+                todayCount
             })
 
         })
@@ -91,19 +167,27 @@ class WebSocket {
     }
 }
 
-var updateCountSql = "SELECT day_msg_count FROM sp_msgcount ORDER BY day_id DESC";
 
 function updateMsgCount () {
-    link.query(updateCountSql, function (err, res) {
-        if (err) throw err;
-        let dataJs = {
-            msgCount: res[0].day_msg_count
-        };
-        let data = JSON.stringify(dataJs);
-        fs.writeFileSync('/data.json', data);
-    })
+
 }
 
-setInterval(updateMsgCount, 2*1000);
+function OLEtoRGB(ole) {
+    // Verify ole is valid OLE.
+    var blu = Math.floor((ole / 65536) % 256);
+    var grn = Math.floor((ole / 256) % 256);
+    var red = Math.floor(ole % 256);
+
+    blu = blu.toString(16);
+    if (blu.length < 2) { blu = "0" + blu; }
+    grn = grn.toString(16);
+    if (grn.length < 2) { grn = "0" + grn; }
+    red = red.toString(16);
+    if (red.length < 2) { red = "0" + red; }
+
+    var rgb = red.toString() + grn.toString() + blu.toString();
+
+    return rgb;
+}
 
 module.exports = WebSocket

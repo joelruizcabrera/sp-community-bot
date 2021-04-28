@@ -1,7 +1,5 @@
 const dotenv = require('dotenv').config()
 
-const { createConnection } = require('mysql')
-
 const Discord = require('discord.js')
 
 const WEB = require('./web/web')
@@ -10,13 +8,6 @@ const bot = new Discord.Client()
 
 const Enmap = require("enmap")
 const fs = require("fs")
-
-var link = createConnection({
-    host     : process.env.MYSQL_HOST,
-    user     : process.env.MYSQL_USER,
-    password : process.env.MYSQL_PASS,
-    database : process.env.MYSQL_DB
-});
 
 const ConsoleProgressBar = require('console-progress-bar');
 const consoleProgressBar = new ConsoleProgressBar({ maxValue: 100 });
@@ -94,13 +85,9 @@ bot.on('ready', () => {
     console.log("BOT:           \x1b[42m\x1b[30mCONNECTED\x1b[0m");
 
     msleep(200);
-    link.connect(err => {
-        if (err) return console.log(err);
-        console.log(`MYSQL:         \x1b[42m\x1b[30mCONNECTED\x1b[0m`);
-    });
 });
 
-var ws = new WEB('123456', 8080, bot)
+var ws = new WEB('123', 8080, bot)
 
 fs.readdir("./events/", (err, files) => {
     if (err) return console.error(err);

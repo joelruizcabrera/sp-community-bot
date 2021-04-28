@@ -9,12 +9,12 @@ module.exports = (bot, message) => {
         console.log("\x1b[43m\x1b[30m[#" + message.channel.name + "] " + message.author.tag + ":\x1b[0m " + message.content);
     }
 
-    FUNCTIONS.addMsgCount();
-
     const args = message.content.slice(bot.config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
     const cmd = bot.commands.get(command);
+
+    FUNCTIONS.addMsgCount();
 
     if (!cmd) return;
 
